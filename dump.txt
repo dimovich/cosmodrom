@@ -1,0 +1,47 @@
+--- Apache Virtual Hosts
+/etc/hosts
+a2enablesite
+/etc/apache2/ports.conf
+
+/etc/airtime/api_client.cfg and /etc/airtime/airtime.conf
+
+airtime-update-db
+---
+
+
+
+
+---
+
+sudo invoke-rc.d airtime-liquidsoap     start|stop|restart|status
+sudo invoke-rc.d airtime-playout        start|stop|restart|status
+sudo invoke-rc.d airtime-media-monitor  start|stop|restart|status
+sudo invoke-rc.d apache2                start|stop|restart|status
+sudo invoke-rc.d rabbitmq-server        start|stop|restart|status
+
+
+--- RABBITMQ
+1. Delete the files in /var/lib/rabbitmq/mnesia/
+
+sudo rm -r /var/lib/rabbitmq/mnesia/*
+
+2. Restart RabbitMQ:
+
+sudo invoke-rc.d rabbitmq-server restart
+
+3. Enter the following commands to set up authentication and grant permissions. The rabbitmqctl add_user command requires the RabbitMQ password from the /etc/airtime/airtime.conf file as an argument. The rabbitmqctl set_permissions command should be entered on one line, with the list of Airtime services repeated three times:
+
+rabbitmqctl add_vhost /airtime
+rabbitmqctl add_user airtime XXXXXXXXXXXXXXXXXXXX 
+rabbitmqctl set_permissions -p /airtime airtime 
+   "airtime-pypo|pypo-fetch|airtime-media-monitor|media-monitor"
+   "airtime-pypo|pypo-fetch|airtime-media-monitor|media-monitor"
+   "airtime-pypo|pypo-fetch|airtime-media-monitor|media-monitor"
+
+---
+
+
+    Install your firewall ,if you are a geek shorewall is your thing
+    Install an intrusion system like snort.
+    and never forget fail2ban.
+
