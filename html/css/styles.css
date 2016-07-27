@@ -1,23 +1,5 @@
-/*html { 
-   width:100%; 
-   height:100%;
-   /*background:url(../img/background.jpg) center center no-repeat;*/
-/*   background-size: 40%;
-}*/
-
-/*body {
-/*  max-width: 600px;
-  margin: 0 auto;
-/*  padding-top: 72px;
-}*/
-
-.flare {
-    position: absolute;
-    display: block;
-    left: 50%;
-    top: 50%;
-/*    margin-left: -490px;
-    margin-top: -300px;*/
-    width: 980px;
-    height: 600px;
+body { 
+    background-image: url(../img/back01.jpg);
+    background-size: 100% 100%;
+    overflow: hidden;
 }
