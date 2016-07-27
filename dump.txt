@@ -1,3 +1,68 @@
+--- CLJS
+http://jsfiddle.net/simonsarris/weMbr/
+https://lodash.com/docs#debounce
+---
+
+
+
+--- CLJS interop
+(.-prop (js/type.))
+---
+
+
+--- cosmodrom
+0 12 * * * /var/agroial/encode.sh
+---
+
+--- reagent
+(render [hiccups] dom)
+(render-to-static-markup [hiccups])
+
+- use square brakets so reagent produces react-able components
+---
+
+
+
+--- CLJS docs
+https://www.niwi.nz/cljs-workshop/#_introduction
+---
+
+
+
+---
+(cljs ... various things
+      :compiler-options {:foreign-libs [{:file "path/to/the/thing.js"
+                                         :provides ["some.fancy.namespace"]}]})
+
+
+
+---
+
+
+--- reagent mo.js
+https://github.com/reagent-project/reagent-cookbook/tree/master/recipes/mojs-animation
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 --- Apache Virtual Hosts
 /etc/hosts
 a2enablesite

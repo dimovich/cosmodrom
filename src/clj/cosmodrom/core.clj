@@ -1,8 +1,7 @@
 (ns cosmodrom.core 
   (:require [compojure.core :refer [defroutes GET POST]]
             [compojure.route :refer [not-found files resources]]
-            [compojure.handler :refer [site]]
-            [shoreleave.middleware.rpc :refer [wrap-rpc]]))
+            [compojure.handler :refer [site]]))
 
 (defroutes handler
   (GET "/" [] "Hello from Compojure!")  ;; for testing only
@@ -12,5 +11,4 @@
 
 (def app
   (-> handler
-      (wrap-rpc)
       (site)))

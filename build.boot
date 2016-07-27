@@ -4,29 +4,23 @@
 
  :dependencies '[
                  [org.clojure/clojure "1.7.0"]         ;; add CLJ
-                 [org.clojure/clojurescript "1.7.228"] ;; add CLJS
-                 [adzerk/boot-cljs "1.7.170-3"]
+                 [org.clojure/clojurescript "1.7.228"] ;; add CLJ
+                 [adzerk/boot-cljs "1.7.228-1"]
                  [pandeiro/boot-http "0.7.0"]
-                 [adzerk/boot-reload "0.4.2"]
-                 [adzerk/boot-cljs-repl "0.3.0"]       ;; add bREPL
-                 [com.cemerick/piggieback "0.2.1"]     ;; needed by bREPL 
-                 [weasel "0.7.0"]                      ;; needed by bREPL
-                 [org.clojure/tools.nrepl "0.2.12"]    ;; needed by bREPL
+                 [adzerk/boot-reload "0.4.12"]
+                 [adzerk/boot-cljs-repl "0.3.2"]   ;; add bREPL
+                 [com.cemerick/piggieback "0.2.1"] ;; needed by bREPL 
+                 [weasel "0.7.0"]                  ;; needed by bREPL
+                 [org.clojure/tools.nrepl "0.2.12"] ;; needed by bREPL
                  [org.clojars.magomimmo/domina "2.0.0-SNAPSHOT"]
                  [hiccups "0.3.0"]
-                 [compojure "1.4.0"]                   ;; for routing
-                 [org.clojars.magomimmo/shoreleave-remote-ring "0.3.1"]
-                 [org.clojars.magomimmo/shoreleave-remote "0.3.1"]
-                 [javax.servlet/servlet-api "3.0-alpha-1"]
-                 [org.clojars.dimovich/valip "0.4.0-SNAPSHOT"]
+                 [compojure "1.4.0"] ;; for routing
                  [enlive "1.1.6"]
                  [adzerk/boot-test "1.1.0"]
                  [crisptrutski/boot-cljs-test "0.2.1"]
-                 [reagent "0.6.0-alpha2"]
-                 [cljsjs/marked "0.3.5-0"]
-                 [cljsjs/fabric "1.5.0-0"]
-                 [cljsjs/pixi "3.0.10-0"]
-                 [thi.ng/color "1.2.0"]])
+                 [reagent "0.6.0-rc"]
+                 [thi.ng/color "1.2.0"]
+                 [cljsjs/svgjs "2.2.5-0"]])
 
 (require '[adzerk.boot-cljs :refer [cljs]]
          '[pandeiro.boot-http :refer [serve]]
@@ -38,7 +32,7 @@
 
 
 (swap! boot.repl/*default-dependencies*
-       concat '[[cider/cider-nrepl "0.13.0-SNAPSHOT"]
+       concat '[[cider/cider-nrepl "0.13.0"]
                 [refactor-nrepl "2.0.0-SNAPSHOT"]])
 
 (swap! boot.repl/*default-middleware*
@@ -81,21 +75,16 @@
      (watch :verbose verbose)
      (reload)
      (cljs-repl)
-     (test-cljs :out-file output-to 
-                :js-env testbed 
-                :namespaces namespaces
-                :update-fs? true
-                :optimizations optimizations)
-     (test :namespaces namespaces)
+     (cljs)
      (target :dir #{"target"}))))
 
 (deftask dev 
   "Launch immediate feedback dev environment"
   []
   (comp
-   (serve :handler 'cosmodrom.core/app               ;; ring hanlder
-          :resource-root "target"                      ;; root classpath
-          :reload true)                                ;; reload ns
+   (serve :handler 'cosmodrom.core/app ;; ring hanlder
+          :resource-root "target"      ;; root classpath
+          :reload true)                ;; reload ns
    (watch)
    (reload)
    (cljs-repl) ;; before cljs

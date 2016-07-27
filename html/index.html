@@ -3,19 +3,13 @@
 <head>
     <meta charset="utf-8">
     <title>Cosmodrom</title>
-    <!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="body">
-  <div class="content">
-    <div class="player">
-      <audio controls autoplay="autoplay">
-	<source src="http://cosmodrom.eu:8000/airtime_128" type="audio/ogg">
-      </audio>
-    </div>
-  </div>
+<body>
+  <svg id="display"></svg>
+  <div id="app"></div>
+    <script src="main.js"></script>
+    <script>cosmodrom.core.init();</script>
 </body>
 </html>
 
