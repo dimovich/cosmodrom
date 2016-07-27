@@ -16,3 +16,6 @@
   (if (and js/document
            (aget js/document "getElementById"))
     (render [page app] (by-id "app"))))
+
+
+;(.attr (.rect svg 100 100) (clj->js {:fill "#f06"}))
