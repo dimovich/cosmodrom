@@ -2,7 +2,9 @@
 http://jsfiddle.net/simonsarris/weMbr/
 https://lodash.com/docs#debounce
 https://github.com/reagent-project/reagent/blob/master/examples/geometry/src/geometry/geometry.cljs
+https://www.smashingmagazine.com/2016/07/an-svg-animation-case-study/?utm_source=html5weekly&utm_medium=email
 ---
+
 
 
 
