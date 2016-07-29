@@ -20,7 +20,7 @@
                  [crisptrutski/boot-cljs-test "0.2.1"]
                  [reagent "0.6.0-rc"]
                  [thi.ng/color "1.2.0"]
-                 [cljsjs/svgjs "2.2.5-0"]])
+                 [cljsjs/snapsvg "0.4.1-0"]])
 
 (require '[adzerk.boot-cljs :refer [cljs]]
          '[pandeiro.boot-http :refer [serve]]
