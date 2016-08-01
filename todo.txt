@@ -1,0 +1,8 @@
+* Add event listeners to flares
+* Animate flares
+  - Use reagent components with r/atom -or- use svg.animate
+* Use reagent components?
+
+? can snapsvg see reagent components?
+
+* parse svg with hickory

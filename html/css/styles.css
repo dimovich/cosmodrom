@@ -8,16 +8,41 @@ html, body {
     background-color: #E6E6E6;
     font-family: sans-serif;
     background-image: url(../img/back.jpg);
+    background-size: cover;
 }
 
 
 /* Centered canvas */
-.canvas {
+.canvash {
+    margin: 0 auto;
     position: absolute;
     top: 50%;
     left: 50%;
-    -webkit-transform: translateX(-50%) translateY(-50%);
-    -ms-transform: translateX(-50%) translateY(-50%);
-    transform: translateX(-50%) translateY(-50%);
     overflow: hidden;
+    transform: translate(-50%, -50%);
+}
+
+.centered {
+    position: relative;
+}
+
+.centered div {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+.flare-chat {
+    mix-blend-mode: multiply;
+}
+
+.flare-calendar {
+    mix-blend-mode: multiply;
+}
+
+.flare-videos {
+    mix-blend-mode: overlay;
 }

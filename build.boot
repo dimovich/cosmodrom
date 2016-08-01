@@ -13,6 +13,7 @@
                  [weasel "0.7.0"]                  ;; needed by bREPL
                  [org.clojure/tools.nrepl "0.2.12"] ;; needed by bREPL
                  [org.clojars.magomimmo/domina "2.0.0-SNAPSHOT"]
+                 [javax.servlet/servlet-api "3.0-alpha-1"]
                  [hiccups "0.3.0"]
                  [compojure "1.4.0"] ;; for routing
                  [enlive "1.1.6"]
@@ -20,7 +21,9 @@
                  [crisptrutski/boot-cljs-test "0.2.1"]
                  [reagent "0.6.0-rc"]
                  [thi.ng/color "1.2.0"]
-                 [cljsjs/snapsvg "0.4.1-0"]])
+                 [cljsjs/snapsvg "0.4.1-0"]
+                 [hickory "0.6.0"]
+                 [clj-tagsoup "0.3.0"]])
 
 (require '[adzerk.boot-cljs :refer [cljs]]
          '[pandeiro.boot-http :refer [serve]]
