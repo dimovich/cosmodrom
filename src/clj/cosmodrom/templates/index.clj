@@ -5,4 +5,5 @@
 
 (deftemplate index "index.html"
   []
-  [:div#app] (html-content (slurp "html/svg/flares.svg")))
+  ;;[:div#app] (html-content (slurp "html/svg/flares.svg"))
+  )

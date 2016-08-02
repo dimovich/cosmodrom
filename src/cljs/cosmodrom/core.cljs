@@ -11,7 +11,6 @@
                   :svg-dom-id "#canvas"}))
 
 
-
 ;;
 ;; el is a group node
 ;;
@@ -46,7 +45,8 @@
 
 
 (defn flare []
-  (embed-svg "html/svg/flares.svg"))
+  [:div
+   (embed-svg "html/svg/flares.svg")])
 
 
 (defn page [state]
@@ -61,29 +61,67 @@
       (swap! app assoc :width width))))
 
 
-(defn load-svg [ctx path]
-  (.load js/Snap path (fn [data] (.append ctx data))))
+(defn flare-hover-in [effect]
+  (let [child (-> effect (.-node) (.-firstChild))
+        start (-> child (.-attributes) (aget 0) (.-value) js->clj)]
+    (.animate js/Snap start 5 (fn [v] (-> child
+                                      (.-attributes)
+                                      (aget 0)
+                                      (.-value)
+                                      (set! v)))
+              300)))
 
+(defn flare-hover-out [effect]
+  (let [child (-> effect (.-node) (.-firstChild))
+        start (-> child (.-attributes) (aget 0) (.-value) js->clj)]
+    (.animate js/Snap start 0 (fn [v] (-> child
+                                      (.-attributes)
+                                      (aget 0)
+                                      (.-value)
+                                      (set! v)))
+              300)))
+
+(defn flare-chat-click []
+  (js/alert "chat"))
+
+(defn flare-video-click []
+  (js/alert "video"))
+
+(defn flare-calendar-click [el])
+
+(defn set-flare-hover [el effect]
+  (.attr el #js {:filter effect})
+  (.hover el #(flare-hover-in effect) #(flare-hover-out effect)))
+
+(defn create-blur-effect [paper]
+  (.filter paper (-> (.-filter js/Snap) (.blur 0))))
 
 (defn init-svg [state]
-  (comment (let [svg (js/Snap (:svg-dom-id @state))]
-             (swap! state assoc :svg svg)
-             (load-svg svg (:flares-file @state))
+  (let [paper (js/Snap "#cosmodrom")
+        flare-calendar (js/Snap "#flare-calendar")
+        flare-chat (js/Snap "#flare-chat")
+        flare-video (js/Snap "#flare-videos")]
     
-             (swap! state assoc :flare-calendar (.select svg "#flare-calendar"))
-             (swap! state assoc :flare-chat (.select svg "#flare-chat"))
-             (swap! state assoc :flare-video (.select svg "#flare-videos")))))
+    (.click flare-calendar (fn [] (flare-calendar-click [flare-calendar])))
+    (.click flare-chat flare-chat-click)
+    (.click flare-video flare-video-click)
+
+    (set-flare-hover flare-calendar (create-blur-effect paper))
+    (set-flare-hover flare-chat (create-blur-effect paper))
+    (set-flare-hover flare-video (create-blur-effect paper))))
+
 
 
 (defn ^:export init []
   (if (and js/document
            (aget js/document "getElementById"))
     (do
-      ;; init flares
-      (init-svg app)
       ;; render page
       (render [page app] (by-id "app"))
-      (.addEventListener js/window "resize" window-resize-handler))))
+      ;; init flares
+      (init-svg app)
+;;      (.addEventListener js/window "resize" window-resize-handler)
+      )))
 
 
 ;(.attr (.rect svg 100 100) (clj->js {:fill "#f06"}))

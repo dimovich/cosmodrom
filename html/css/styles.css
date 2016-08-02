@@ -1,5 +1,5 @@
 /* Full screen */
-html, body {
+/*html, body {
     position: relative;
     width: 100%;
     height: 100%;
@@ -9,40 +9,47 @@ html, body {
     font-family: sans-serif;
     background-image: url(../img/back.jpg);
     background-size: cover;
+}*/
+
+html, body {
+    height: 100%;
+    background-image: url(../img/back.jpg);
+    background-size: cover;
+    overflow: hidden;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 
 /* Centered canvas */
-.canvash {
+.c {
     margin: 0 auto;
     position: absolute;
     top: 50%;
     left: 50%;
-    overflow: hidden;
     transform: translate(-50%, -50%);
 }
 
-.centered {
-    position: relative;
+.pointer {
+    cursor: hand;
 }
-
-.centered div {
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
 
 .flare-chat {
     mix-blend-mode: multiply;
+    cursor: pointer;
 }
 
 .flare-calendar {
     mix-blend-mode: multiply;
+    cursor: pointer;
 }
 
 .flare-videos {
     mix-blend-mode: overlay;
+    cursor: pointer;
 }
+
