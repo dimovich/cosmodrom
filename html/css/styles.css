@@ -1,16 +1,3 @@
-/* Full screen */
-/*html, body {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-    background-color: #E6E6E6;
-    font-family: sans-serif;
-    background-image: url(../img/back.jpg);
-    background-size: cover;
-}*/
-
 html, body {
     height: 100%;
     background-image: url(../img/back.jpg);
@@ -25,31 +12,18 @@ body {
 }
 
 
-/* Centered canvas */
-.c {
-    margin: 0 auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.flare:hover {
+    filter: url("../svg/effects.svg#blur");
+}
+
+.multiply {
+    mix-blend-mode: multiply;
+}
+
+.overlay {
+    mix-blend-mode: overlay;
 }
 
 .pointer {
-    cursor: hand;
-}
-
-.flare-chat {
-    mix-blend-mode: multiply;
     cursor: pointer;
 }
-
-.flare-calendar {
-    mix-blend-mode: multiply;
-    cursor: pointer;
-}
-
-.flare-videos {
-    mix-blend-mode: overlay;
-    cursor: pointer;
-}
-
