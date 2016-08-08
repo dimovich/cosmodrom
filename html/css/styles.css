@@ -1,28 +1,68 @@
 html, body {
     height: 100%;
-    background-image: url(../img/back.jpg);
-    background-size: cover;
-    overflow: hidden;
+    width: 100%;
+    /*    overflow: hidden;*/
 }
 
 body {
+    margin: 0;
+}
+
+html {
+    background-image: url(../img/back.jpg);
+    background-size: cover;
+}
+
+
+.center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  vertical-align: middle;
+}
+
+.app {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 10;
+}
+
+.overlay {
+
+}
+
+/*body {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 
+.fixed {
+    z-index: 3000;
+    top: 0;
+    left: 0;
+    position: fixed;
+}*/
+
+
 .flare:hover {
-    filter: url("../svg/effects.svg#blur");
+    -webkit-filter: blur(3px);
+    filter: blur(3px);
 }
+
 
 .multiply {
     mix-blend-mode: multiply;
 }
 
+
 .overlay {
     mix-blend-mode: overlay;
 }
+
 
 .pointer {
     cursor: pointer;

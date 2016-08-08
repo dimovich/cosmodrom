@@ -5,5 +5,4 @@
 
 (deftemplate index "index.html"
   []
-  ;;[:div#app] (html-content (slurp "html/svg/flares.svg"))
-  )
+  [:div#cosmodrom-app] (html-content (slurp "resources/flares.svg")))

@@ -2,32 +2,15 @@
   (:require [reagent.core :as r :refer [render]]
             [domina.core :refer [by-id]]
             [cljsjs.snapsvg]
-            [hickory.core :as hick])
-  (:require-macros [cosmodrom.embed :refer [embed-svg]]))
+            [clojure.string :as s])
+  (:require-macros [cosmodrom.util :refer [html-to-hiccup]]))
 
 (def app (r/atom {:width (.-innerWidth js/window)
                   :height (.-innerHeight js/window)}))
 
 
-(defn flare []
-  [:div
-   [:svg
-    {:y "0px", :xml:space "preserve", :width "401.417px",
-     :viewbox "0 0 401.417 377", :id "cosmodrom", :x "0px",
-     :version "1.1", :enable-background "new 0 0 401.417 377", :height "377px"}
-    (embed-svg "resources/flares.svg")]])
 
 
-(defn page [state]
-  [flare])
-
-
-(defn window-resize-handler [evt]
-  (let [height (.-innerHeight js/window)
-        width (.-innerWidth js/window)]
-    (do
-      (swap! app assoc :height height)
-      (swap! app assoc :width width))))
 
 
 
@@ -38,15 +21,53 @@
 (defn flare-calendar-click [el])
 
 
+
+(defn center-flare [state]
+  (let [paper (:svg @state)
+        width (:width @state)
+        height (:height @state)
+        flare-width (js/parseInt (.-width (.attr paper)))
+        flare-height (js/parseInt (.-height (.attr paper)))
+        x0 (/ (- width flare-width) 2 )
+        y0 (/ (- height flare-height) 2 )]
+
+    (.attr paper (clj->js {:x x0
+                           :y y0}))))
+
 (defn init-svg [state]
-  (let [paper (js/Snap "#cosmodrom")
+  (let [width (:width @state)
+        height (:height @state)
+        paper (js/Snap "#flare")
         flare-calendar (js/Snap "#flare-calendar")
         flare-chat (js/Snap "#flare-chat")
         flare-video (js/Snap "#flare-video")]
+
+
+    (swap! state assoc :svg paper)
+
+    (center-flare state)
     
     (.click flare-calendar (fn [] (flare-calendar-click [flare-calendar])))
     (.click flare-chat flare-chat-click)
     (.click flare-video flare-video-click)))
+
+
+(defn window-resize-handler [evt]
+  (let [height (.-innerHeight js/window)
+        width (.-innerWidth js/window)
+        paper (:svg @app)]
+    (do
+      (swap! app assoc :height height)
+      (swap! app assoc :width width)
+      (center-flare app))))
+
+
+
+(defn flare []
+  (html-to-hiccup "resources/flares.svg"))
+
+
+(defn page [state])
 
 
 
@@ -55,8 +76,7 @@
            (aget js/document "getElementById"))
     (do
       ;; render page
-      (render [page app] (by-id "app"))
+;      (render [page app] (by-id "cosmodrom-app"))
       ;; init flares
       (init-svg app)
-;;      (.addEventListener js/window "resize" window-resize-handler)
-      )))
+      (.addEventListener js/window "resize" window-resize-handler))))

@@ -1,3 +1,12 @@
+--- SVG
+make parent svg 100%
+use width and height of child svg to compute x and y
+the back flares use 100%, and static viewBox
+---
+
+
+
+
 --- CLJS
 http://jsfiddle.net/simonsarris/weMbr/
 https://lodash.com/docs#debounce
