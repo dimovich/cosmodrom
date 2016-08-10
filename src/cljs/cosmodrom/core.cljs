@@ -10,10 +10,6 @@
 
 
 
-
-
-
-
 (defn flare-chat-click [])
 
 (defn flare-video-click [])
@@ -38,9 +34,9 @@
   (let [width (:width @state)
         height (:height @state)
         paper (js/Snap "#flare")
-        flare-calendar (js/Snap "#flare-calendar")
-        flare-chat (js/Snap "#flare-chat")
-        flare-video (js/Snap "#flare-video")]
+        flare-calendar (js/Snap "#calendar")
+        flare-chat (js/Snap "#chat")
+        flare-video (js/Snap "#cosmolab")]
 
 
     (swap! state assoc :svg paper)
@@ -64,7 +60,7 @@
 
 
 (defn flare []
-  (html-to-hiccup "resources/flares.svg"))
+  (html-to-hiccup "resources/flare.svg"))
 
 
 (defn page [state])
@@ -79,4 +75,5 @@
 ;      (render [page app] (by-id "cosmodrom-app"))
       ;; init flares
       (init-svg app)
-      (.addEventListener js/window "resize" window-resize-handler))))
+      (.addEventListener js/window "resize" window-resize-handler)
+      )))
