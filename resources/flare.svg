@@ -9,7 +9,7 @@
 
 <svg version="1.1" id="calendar" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="50%" height="100%" viewBox="0 0 1024 768" enable-background="new 0 0 1024 768" xml:space="preserve" preserveAspectRatio="xMinYMid slice">
-<path class="multiply" fill="#F9BD38" d="M0,768h323.308c22.034-7.721,43.919-16.951,65.498-27.75c239.86-120.031,351.147-387.215,248.571-596.774
+<path class="multiply hidden" fill="#F9BD38" d="M0,768h323.308c22.034-7.721,43.919-16.951,65.498-27.75c239.86-120.031,351.147-387.215,248.571-596.774
 	C608.416,84.315,565.504,36.075,513.434,0H0V768z"/>
 </svg>
 
@@ -23,14 +23,14 @@
 
 <svg version="1.1" id="flare" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="406.917px" height="367.333px" viewBox="0 0 406.917 367.333" enable-background="new 0 0 406.917 367.333"
-	 xml:space="preserve">
-	<path id="Purple" class="flare overlay" fill="#A008BF" d="M387.98,61.208C344.266-1.959,237.5-6.431,149.507,51.22
+	 xml:space="preserve" overflow="visible">
+	<path id="cosmolab-flare" class="flare overlay" fill="#A008BF" d="M387.98,61.208C344.266-1.959,237.5-6.431,149.507,51.22
 		c-87.991,57.65-123.889,155.593-80.176,218.76c43.711,63.166,150.478,67.639,238.468,9.987
 		C395.793,222.316,431.691,124.373,387.98,61.208z"/>
 	
-		<ellipse id="Yellow" class="flare hidden multiply" transform="matrix(0.8294 -0.5587 0.5587 0.8294 -62.2057 123.995)" fill="#F9BD38" cx="171.89" cy="163.835" rx="178.04" ry="156.286"/>
+		<ellipse id="calendar-flare" class="flare multiply" transform="matrix(0.8294 -0.5587 0.5587 0.8294 -62.2057 123.995)" fill="#F9BD38" cx="171.89" cy="163.835" rx="178.04" ry="156.286"/>
 	
-		<ellipse id="Blue" class="flare multiply" transform="matrix(0.8154 0.5789 -0.5789 0.8154 153.2645 -79.1526)" fill="#00F2C3" cx="200.746" cy="200.747" rx="147.789" ry="174.078"/>
+		<ellipse id="chat-flare" class="flare multiply" transform="matrix(0.8154 0.5789 -0.5789 0.8154 153.2645 -79.1526)" fill="#00F2C3" cx="200.746" cy="200.747" rx="147.789" ry="174.078"/>
 	<g id="Logo">
 		<path fill="#FFFFFF" d="M95.538,182.768c0,1.609-1.301,2.908-2.906,2.908s-2.908-1.299-2.908-2.908
 			c0-1.603,1.303-2.906,2.908-2.906S95.538,181.165,95.538,182.768z"/>

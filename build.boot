@@ -23,7 +23,8 @@
                  [thi.ng/color "1.2.0"]
                  [cljsjs/snapsvg "0.4.1-0"]
                  [hickory "0.6.0"]
-                 [clj-tagsoup "0.3.0"]])
+                 [clj-tagsoup "0.3.0"]
+                 [org.clojure/core.async "0.2.385"]])
 
 (require '[adzerk.boot-cljs :refer [cljs]]
          '[pandeiro.boot-http :refer [serve]]

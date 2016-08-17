@@ -50,5 +50,19 @@
       :bottom (.y2 bbox)))
 
 
+  (defn scale-animation [svg percent time]
+    (let [steps 5
+          width (js/parseInt (.-width (.attr svg)))
+          height (js/parseInt (.-height (.attr svg)))
+          stepw (/ (- (/ (* percent width) 100) width) steps)
+          steph (/ (- (/ (* percent height) 100) height) steps)]
+      (.animate js/Snap 1 steps
+                (fn [v]
+                  (.attr svg (clj->js {:width (+ width (* stepw v))
+                                       :height (+ height (* steph v))}))
+                  (println v))
+                time)))
   )
+
+
 
