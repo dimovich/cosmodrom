@@ -1,20 +1,23 @@
 <svg  version="1.1" id="mainsvg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="100%" height="100%" xml:space="preserve">
 
-<svg version="1.1" id="cosmolab" class="overlay hidden" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="100%" height="100%" preserveAspectRatio="xMinYMid slice" viewBox="0 0 681.89917 768">
-<path fill="#A008BF" d="m 197.47019,46.452 c -236.016004,157.143 -264.511004,424.856 -63.635,597.982 71.561,61.675 162.58,102.995 260.778,123.566 l 287.286,0 0,-768 -400.864,0 c -29.086,13 -57.072,28.813 -83.565,46.452 z"/>
+<svg version="1.1" id="cosmolab" class="overlay hidden" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="50%" y="0px"
+	 width="50%" height="100%" preserveAspectRatio="xMaxYMid slice" viewBox="0 0 1024 768">
+<path fill="#A008BF" d="M541.571,46.452c-236.016,157.143-264.511,424.856-63.635,597.982
+	C549.497,706.109,640.516,747.429,738.714,768H1026V0H625.136C596.05,13,568.064,28.813,541.571,46.452z"/>
 </svg>
 
 <svg version="1.1" id="calendar" class="multiply hidden" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="100%" height="100%" viewBox="0 0 675.54602 768" enable-background="new 0 0 1024 768" xml:space="preserve" preserveAspectRatio="xMaxYMid slice">
+	 width="50%" height="100%" viewBox="0 0 1024 768" enable-background="new 0 0 1024 768" xml:space="preserve" preserveAspectRatio="xMinYMid slice">
 <path fill="#F9BD38" d="M0,768h323.308c22.034-7.721,43.919-16.951,65.498-27.75c239.86-120.031,351.147-387.215,248.571-596.774
 	C608.416,84.315,565.504,36.075,513.434,0H0V768z"/>
 </svg>
 
 <svg version="1.1" id="chat" class="multiply hidden" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="443.75238" height="513.51361" viewBox="0 0 443.75238 513.51361" enable-background="new 0 0 1024 768" xml:space="preserve" preserveAspectRatio="xMinYMin meet">
-<path fill="#00F2C3" d="m 410.95103,414.54195 c 64.089,-111.858 31.39,-273.181 -73.036,-360.324001 -104.421,-87.142 -241.028003,-67.105 -305.116003,44.752 -64.086,111.861001 -31.3860004,273.182001 73.037003,360.326001 104.425,87.141 241.03,67.106 305.115,-44.754 z"/>
+	 width="1024px" height="768px" viewBox="0 0 1024 768" enable-background="new 0 0 1024 768" xml:space="preserve" preserveAspectRatio="xMidYMax meet">
+<path fill="#00F2C3" d="M759.207,652.24c64.089-111.858,31.39-273.181-73.036-360.324
+	c-104.421-87.142-241.028-67.105-305.116,44.752c-64.086,111.861-31.386,273.182,73.037,360.326
+	C558.517,784.135,695.122,764.1,759.207,652.24z"/>
 </svg>
 
 

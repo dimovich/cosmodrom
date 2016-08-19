@@ -1,3 +1,7 @@
 - sections
+  * align -> you already know the dimensions... precompute everything you can... so you can do the opacity animation for back flares
+  * center
+  * masks (sth seems off)
+  * fade-out / fade-in
 - player
 - reagent
