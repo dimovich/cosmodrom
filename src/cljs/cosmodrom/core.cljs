@@ -1,72 +1,26 @@
 (ns cosmodrom.core
   (:require [reagent.core :as r :refer [render]]
-            [domina.core :refer [by-id]]
+;;            [domina.core :refer [by-id]]
             [cljsjs.snapsvg]
             [clojure.string :as s]
-            [cljs.core.async :refer [<! timeout]])
-  (:require-macros [cosmodrom.util :refer [html-to-hiccup]]
-                   [cljs.core.async.macros :refer [go-loop]]))
+            [cosmodrom.svg :as svg :refer [animate-opacity
+                                           animate-scale
+                                           get-width
+                                           get-height
+                                           unhide
+                                           hide
+                                           center-svg
+                                           center-svg-x]])
+  (:require-macros [cosmodrom.util :refer [html-to-hiccup]]))
 
 (def app (atom {:width (.-innerWidth js/window)
                 :height (.-innerHeight js/window)
-                :opacity-time 600
-                :scale-time 600
-                :flare-scale 50}))
+                :opacity-time 400
+                :scale-time 550
+                :flare-scale 43}))
 
 
-(defn get-width [el]
-  (-> el (.attr) (.-width) js/parseInt))
-
-(defn get-height [el]
-  (-> el (.attr) (.-height) js/parseInt))
-
-
-(defn center-flare-x [svg]
-  (let [width (:width @app)
-        flare-width (get-width svg)
-        x0 (/ (- width flare-width) 2 )]
-    (.attr svg (clj->js {:x x0}))))
-
-(defn center-flare [svg]
-  (let [width (:width @app)
-        height (:height @app)
-        flare-width (get-width svg)
-        flare-height (get-height svg)
-        x0 (/ (- width flare-width) 2 )
-        y0 (/ (- height flare-height) 2 )]
-
-    (.attr svg (clj->js {:x x0
-                         :y y0}))))
-
-
-(defn scale [svg percent]
-  (let [width (/ (* percent (get-width svg)) 100)
-        height (/ (* percent (get-height svg)) 100)]
-   (.attr svg (clj->js {:width width :height height}))))
-
-
-(defn animate-scale [svg percent time callback]
-  (let [steps 5
-        attr (.attr svg)
-        width (get-width svg)
-        height (get-height svg)
-        end-width (-> width (* percent) (/ 100))
-        end-height (-> height (* percent) (/ 100))
-        x0 (/ (- (:width @app) end-width) 2 )
-        y0 (/ (- (:height @app) end-height) 2 )]
-    
-    (.animate svg (clj->js {:width end-width
-                            :height end-height
-                            :x x0 :y y0})
-              time
-              js/mina.backout
-              callback)))
-
-
-(defn animate-opacity [svg value time]
-  (.animate svg
-            #js {:opacity value}
-            time))
+;;(enable-console-print!)
 
 
 (defn animate-flare-click [el callback]
@@ -74,94 +28,49 @@
     (animate-scale svg (:flare-scale @app) (:scale-time @app) callback)
     (animate-opacity el 0 (:opacity-time @app))))
 
-(defn animate-flare-unclick [el]
+(defn animate-flare-unclick [el callback]
   (let [svg (js/Snap "#flare")]
-    (animate-scale svg (/ 10000 (:flare-scale @app)) (:scale-time @app) nil)
+    (animate-scale svg (/ 10000 (:flare-scale @app)) (:scale-time @app) callback)
     (animate-opacity el 1 (:opacity-time @app))))
 
 
-(defn unhide [el]
-  (.removeClass el "hidden"))
-
-(defn hide [el]
-  (.addClass el "hidden"))
-
-
-(defn setup-calendar-svg []
-  (let [el (js/Snap "#calendar")]
-    (unhide el)
-    (.attr el
-           (clj->js {:width (+ 10 (-> (js/Snap "#flare")
-                                      (.attr)
-                                      (.-x)
-                                      js/parseInt)
-                               (/ (-> (js/Snap "#flare-chat")
-                                      (.getBBox)
-                                      (.-x2)
-                                      js/parseInt) 2))}))))
-
-
-
-(defn setup-cosmolab-svg []
-  (let [el (js/Snap "#cosmolab")]
-    (unhide el)
-    (.attr el
-           (clj->js {:x (- (+ (-> (js/Snap "#flare")
-                                (.attr)
-                                (.-x)
-                                js/parseInt)
-                            (-> (js/Snap "#flare-chat")
-                                (.getBBox)
-                                (.-x)
-                                js/parseInt)) 24)}))))
-
-
-(defn setup-chat-svg []
-  (let [el (js/Snap "#chat")]
-    (center-flare-x el)
-    (unhide el)
-    (.attr el (clj->js {:y (+ (-> (js/Snap "#flare")
-                                  (.attr)
-                                  (.-y)
-                                  js/parseInt)
-                              (/ (-> (js/Snap "#flare-cosmolab")
-                                     (.getBBox)
-                                     (.-y)
-                                     js/parseInt) 2))}))))
-
-
-
-(defn flare-click [el callback]
-  (if-not (:clicked-flare @app)
-    (do
-      (swap! app assoc :clicked-flare el)
-      (animate-flare-click el callback))
-    (do
-      (let [el (:clicked-flare @app)
-            back-id (-> el (.attr) (.-id) (s/split #"-") second)
-            back-el (js/Snap (str "#" back-id))]
-        (animate-flare-unclick el)
-        ;;hide background-flare
-        (hide (js/Snap (str "#" back-id))))
-      (swap! app dissoc :clicked-flare))))
-
-
 (defn center-me [f]
-  (swap! app update-in [:center-me] #(identity [f])))
+  (swap! app update-in [:center-me] #(identity [f]))
+  (f (:width @app) (:height @app)))
 
-(defn flare-cosmolab-click [el]
-  (flare-click el setup-cosmolab-svg)
-  (center-me setup-cosmolab-svg))
-
-
-(defn flare-calendar-click [el]
-  (flare-click el setup-calendar-svg)
-  (center-me setup-calendar-svg))
+(defn reset-center-me []
+  (swap! app dissoc :center-me))
 
 
-(defn flare-chat-click [el]
-  (flare-click el setup-chat-svg)
-  (center-me setup-chat-svg))
+(defn start-clicking [state el]
+  (swap! state assoc :clicking el))
+
+
+(defn end-clicking [state el]
+  (swap! state dissoc :clicking)
+  (if (:clicked @state)
+    (swap! state dissoc :clicked)
+    (swap! state assoc :clicked el)))
+
+
+(defn flare-click [el back-el back-scale-fn]
+  (when-not (:clicking @app)
+    (if-not (:clicked @app)
+      (do
+        (start-clicking app el)
+        (swap! app assoc :clicked-back-el back-el)
+        (animate-flare-click el (fn []
+                                  (center-me back-scale-fn)
+                                  (unhide back-el (:opacity-time @app))
+                                  (end-clicking app el))))
+      (do
+        (let [el (:clicked @app)]
+          (start-clicking app el)
+          (hide (:clicked-back-el @app) (:opacity-time @app))
+          (animate-flare-unclick el (fn []
+                                      (reset-center-me)
+                                      (end-clicking app el))))))))
+
 
 
 (defn init-svg [state]
@@ -170,13 +79,75 @@
         svg (js/Snap "#flare")
         flare-calendar (js/Snap "#flare-calendar")
         flare-chat (js/Snap "#flare-chat")
-        flare-cosmolab (js/Snap "#flare-cosmolab")]
+        flare-cosmolab (js/Snap "#flare-cosmolab")
+        logo (js/Snap "#logo")
+        cosmolab (js/Snap "#cosmolab")
+        calendar (js/Snap "#calendar")
+        chat (js/Snap "#chat")]
 
-    (center-flare svg)
+    (center-svg svg width height)
+
+    ;; precompute constants for background dimensions
+    (let [factor (/ 100 (:flare-scale @state))
+          scaled-flare-width (/ (get-width svg) factor)
+          scaled-flare-height (/ (get-height svg) factor)
+          bbox-chat (.getBBox flare-chat)
+          bbox-calendar (.getBBox flare-calendar)
+          bbox-cosmolab (.getBBox flare-cosmolab)
+          scaled-x2-chat (-> bbox-chat (.-width) js/parseFloat (/ factor))
+          scaled-x-chat (-> bbox-chat (.-x) js/parseFloat (/ factor))
+          scaled-y-cosmolab (-> bbox-cosmolab (.-y) js/parseFloat (/ factor))]
+
+
+      ;;calendar
+      (.click flare-calendar
+              #(flare-click
+                flare-calendar
+                calendar
+                (fn [w _]
+                  (.attr calendar
+                         (clj->js {:width (+ 26
+                                             (/ (- w
+                                                   scaled-flare-width)
+                                                2)
+                                             scaled-x2-chat)})))))
+
+
+
+      ;;cosmolab
+      (.click flare-cosmolab
+              #(flare-click
+                flare-cosmolab
+                cosmolab
+                (fn [w _]
+                  (.attr cosmolab
+                         (clj->js {:x (-
+                                       (+ (/ (- w
+                                                scaled-flare-width)
+                                             2)
+                                          scaled-x-chat)
+                                       2)})))))
+      
+
+      ;;chat
+      (.click flare-chat
+              #(flare-click
+                flare-chat
+                chat
+                (fn [w h]
+                  (center-svg-x chat w)
+                  (.attr chat
+                         (clj->js {:y (+ (/ (- h scaled-flare-height) 2)
+                                         scaled-y-cosmolab)}))))))
+
+        
     
-    (.click flare-calendar #(flare-calendar-click flare-calendar))
-    (.click flare-chat #(flare-chat-click flare-chat))
-    (.click flare-cosmolab #(flare-cosmolab-click flare-cosmolab))))
+        
+
+    (animate-opacity flare-calendar 1 (:opacity-time @app))
+    (animate-opacity flare-chat 1 (:opacity-time @app))
+    (animate-opacity flare-cosmolab 1 (:opacity-time @app))
+    (animate-opacity logo 1 (:opacity-time @app))))
 
 
 (defn window-resize-handler [evt]
@@ -186,14 +157,15 @@
     (do
       (swap! app assoc :height height)
       (swap! app assoc :width width)
-      (center-flare svg)
+      (center-svg svg width height)
+      
       ;;run centering functions
-      (doall (map #(%) (:center-me @app))))))
+      (doall (map #(% width height) (:center-me @app))))))
 
 
 
-(defn flare []
-  (html-to-hiccup "resources/flare.svg"))
+(comment (defn flare []
+    (html-to-hiccup "resources/flare.svg")))
 
 
 (defn page [state])
